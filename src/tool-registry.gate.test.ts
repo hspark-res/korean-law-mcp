@@ -111,7 +111,7 @@ describe("tools/list 도구 제목", () => {
     for (const t of tools) {
       expect(t.title, t.name).toBeTruthy()
       expect(t.annotations?.title, t.name).toBe(t.title)
-      expect(t.annotations?.readOnlyHint, t.name).toBe(true)
+      expect(t.annotations?.readOnlyHint, t.name).toBe(!["legal_analysis", "execute_tool"].includes(t.name))
     }
     expect(new Set(titles).size).toBe(titles.length)
   })

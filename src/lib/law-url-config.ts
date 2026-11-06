@@ -8,7 +8,8 @@ const DEFAULT_LAW_API_PROTOCOL: LawApiProtocol = "https"
 
 export function getLawApiProtocol(): LawApiProtocol {
   const raw = (process.env.LAW_API_PROTOCOL || "").trim().toLowerCase()
-  if (raw === "http" || raw === "https") return raw
+  if (raw === "http") throw new Error("Insecure LAW_API_PROTOCOL=http is disabled")
+  if (raw === "https") return raw
   return DEFAULT_LAW_API_PROTOCOL
 }
 

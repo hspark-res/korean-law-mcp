@@ -103,6 +103,9 @@ async function saveHwpx(outputPath: string, title: string, articles: Row[][]): P
 
 export async function amendmentTable(apiClient: LawApiClient, input: AmendmentTableInput): Promise<ToolResponse> {
   try {
+    if (process.env.LAW_READ_ONLY === "1" && input.outputPath) {
+      throw new LawApiError("File output is disabled in this read-only installation.", ErrorCodes.INVALID_PARAM)
+    }
     const needsFetch = input.amendments.some(a => a.currentText === undefined)
     const law = needsFetch ? await resolveLaw(apiClient, input) : null
     const results = await Promise.all(input.amendments.map(a => buildArticle(apiClient, law, a, input.apiKey)))

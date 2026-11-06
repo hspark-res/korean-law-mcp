@@ -825,9 +825,9 @@ function listTools() {
       inputSchema: toMcpInputSchema(tool.schema),
       annotations: {
         title: TOOL_TITLES[tool.name],
-        readOnlyHint: true,
+        readOnlyHint: process.env.LAW_READ_ONLY === "1" || !["legal_analysis", "execute_tool"].includes(tool.name),
         destructiveHint: false,
-        idempotentHint: true,
+        idempotentHint: process.env.LAW_READ_ONLY === "1" || !["legal_analysis", "execute_tool"].includes(tool.name),
         openWorldHint: true,
       }
     }))
